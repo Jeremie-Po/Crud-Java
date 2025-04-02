@@ -36,5 +36,9 @@ public class AnnonceController {
         return annonces;
     }
 
-
+    @GetMapping("/annonces/find/{id}")
+    public AnnonceEntity find(@PathVariable Long id) {
+        AnnonceEntity annonce = this.annonceService.findOneById(id);
+        return annonce;
+    }
 }

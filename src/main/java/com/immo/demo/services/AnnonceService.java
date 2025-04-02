@@ -25,5 +25,9 @@ public class AnnonceService {
         return annonceRepository.findAll(pageable);
     }
 
+    public AnnonceEntity findOneById(Long id) {
+        return annonceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("L'annonce ayant l'id " + id + " n'existe pas!"));
+    }
 
 }
