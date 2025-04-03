@@ -3,9 +3,12 @@ package com.immo.demo.services;
 import java.util.List;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.immo.demo.entities.AnnonceEntity;
@@ -36,6 +39,14 @@ public class AnnonceService {
 
         // Voici l'ajout d'annonce à la base de données en utilisant le repository avec la méthode save :
         return annonceRepository.save(annonceEntity);
+    }
+
+    @Transactional
+    public ResponseEntity<Object> deleteAnnonce(Long id) {
+        AnnonceEntity annonce = this.findOneById(id);
+        annonceRepository.delete(annonce);
+        ConfirmationMessage message = new ConfirmationMessage("L'annonce a bien été supprimée", HttpStatus.OK);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }
