@@ -58,4 +58,9 @@ public class AnnonceController {
     public Object delete(@PathVariable(name = "id") Long id) {
         return annonceService.deleteAnnonce(id);
     }
+
+    @PatchMapping("/annonces/update/{id}")
+    public AnnonceEntity update(@PathVariable(name = "id") Long id, @RequestBody AnnonceEntity partialAnnonce) {
+        return annonceService.updateAnnonce(id, partialAnnonce);
+    }
 }
