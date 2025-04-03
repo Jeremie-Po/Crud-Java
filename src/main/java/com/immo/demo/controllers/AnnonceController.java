@@ -46,4 +46,11 @@ public class AnnonceController {
 //    public String handleEntityNotFoundException(EntityNotFoundException ex) {
 //        return ex.getMessage();
 //    }
+
+    @PostMapping("/annonces/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AnnonceEntity add(@RequestBody AnnonceEntity annonceEntity) {
+        // Ajouter l'annonce à la base de données en utilisant le service
+        return annonceService.addAnnonce(annonceEntity);
+    }
 }

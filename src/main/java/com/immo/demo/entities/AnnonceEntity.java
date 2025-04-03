@@ -2,11 +2,9 @@ package com.immo.demo.entities;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import com.immo.demo.utilities.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 @Table(name = "annonces_immobilieres")
@@ -14,7 +12,7 @@ public class AnnonceEntity {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titre;
@@ -25,6 +23,7 @@ public class AnnonceEntity {
 
     private String emplacement;
 
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "date_creation")
     private LocalDateTime dateCreation;
 
