@@ -53,4 +53,9 @@ public class AnnonceController {
         // Ajouter l'annonce à la base de données en utilisant le service
         return annonceService.addAnnonce(annonceEntity);
     }
+
+    @DeleteMapping("/annonces/delete/{id}")
+    public Object delete(@PathVariable(name = "id") Long id) {
+        return annonceService.deleteAnnonce(id);
+    }
 }
