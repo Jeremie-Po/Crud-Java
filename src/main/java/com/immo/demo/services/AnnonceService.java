@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.immo.demo.dto.AnnonceDTO;
+import com.immo.demo.mappers.AnnonceMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
@@ -30,8 +32,15 @@ public class AnnonceService {
         this.annonceRepository = annonceRepository;
     }
 
-    public Page<AnnonceEntity> getAllAnnonces(Pageable pageable) {
-        return annonceRepository.findAll(pageable);
+//    public Page<AnnonceEntity> getAllAnnonces(Pageable pageable) {
+//        return annonceRepository.findAll(pageable);
+//    }
+
+    public Page<AnnonceDTO> getAllAnnonces(Pageable pageable) {
+        Page<AnnonceEntity> annoncePage = annonceRepository.findAll(pageable);
+//        List<AnnonceEntity> annonceEntities = annoncePage.getContent();
+//        return AnnonceMapper.convertToDTOList(annonceEntities);
+        return annoncePage.map(AnnonceMapper::convertToDTO);
     }
 
     public AnnonceEntity findOneById(Long id) {

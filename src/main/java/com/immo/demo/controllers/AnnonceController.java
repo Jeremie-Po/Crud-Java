@@ -1,5 +1,6 @@
 package com.immo.demo.controllers;
 
+import com.immo.demo.dto.AnnonceDTO;
 import com.immo.demo.entities.AnnonceEntity;
 import com.immo.demo.services.AnnonceService;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,16 +22,28 @@ public class AnnonceController {
         this.annonceService = annonceService;
     }
 
+//    @GetMapping("/annonces/liste")
+//    public Page<AnnonceEntity> list(@RequestParam(defaultValue = "0") int page,
+//                                    @RequestParam(defaultValue = "2") int size,
+//                                    @RequestParam(defaultValue = "id") String sortBy) {
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+
+    /// /        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+//
+//
+//        Page<AnnonceEntity> annonces = this.annonceService.getAllAnnonces(pageable);
+//
+//        return annonces;
+//    }
     @GetMapping("/annonces/liste")
-    public Page<AnnonceEntity> list(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "2") int size,
-                                    @RequestParam(defaultValue = "id") String sortBy) {
+    public Page<AnnonceDTO> list(@RequestParam(defaultValue = "0", name = "page") int page,
+                                 @RequestParam(defaultValue = "2", name = "size") int size,
+                                 @RequestParam(defaultValue = "id", name = "sortBy") String sortBy) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
 
-
-        Page<AnnonceEntity> annonces = this.annonceService.getAllAnnonces(pageable);
+        Page<AnnonceDTO> annonces = this.annonceService.getAllAnnonces(pageable);
 
         return annonces;
     }
