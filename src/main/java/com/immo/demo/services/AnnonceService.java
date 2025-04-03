@@ -1,9 +1,15 @@
 package com.immo.demo.services;
 
+import java.beans.PropertyDescriptor;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +53,30 @@ public class AnnonceService {
         annonceRepository.delete(annonce);
         ConfirmationMessage message = new ConfirmationMessage("L'annonce a bien été supprimée", HttpStatus.OK);
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    public AnnonceEntity updateAnnonce(Long id, AnnonceEntity partialAnnonce) {
+        AnnonceEntity existingAnnonce = this.findOneById(id);
+        // Copier les propriétés non nulles de partialAnnonce vers existingAnnonce
+        BeanUtils.copyProperties(partialAnnonce, existingAnnonce, getNullPropertyNames(partialAnnonce));
+
+        return annonceRepository.save(existingAnnonce);
+    }
+
+    private String[] getNullPropertyNames(Object source) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
+        Set<String> emptyNames = new HashSet<>();
+        for (PropertyDescriptor pd : pds) {
+
+            System.out.println("PDS => " + pd);
+
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null) {
+                emptyNames.add(pd.getName());
+            }
+        }
+        return emptyNames.toArray(new String[0]);
     }
 
 }

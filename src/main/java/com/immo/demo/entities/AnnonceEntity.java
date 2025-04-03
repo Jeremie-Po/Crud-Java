@@ -19,7 +19,7 @@ public class AnnonceEntity {
 
     private String description;
 
-    private double prix;
+    private Double prix;
 
     private String emplacement;
 
@@ -61,7 +61,7 @@ public class AnnonceEntity {
         this.description = description;
     }
 
-    public double getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
