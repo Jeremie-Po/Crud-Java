@@ -43,4 +43,10 @@ public class AgenceController {
 
         return agenceService.addAgence(agenceEntity);
     }
+
+    @DeleteMapping("/agences/delete/{id}")
+    public Object delete(@PathVariable(name = "id") Long id) {
+
+        return agenceService.deleteAgence(id);
+    }
 }
