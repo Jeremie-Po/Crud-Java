@@ -49,4 +49,10 @@ public class AgenceController {
 
         return agenceService.deleteAgence(id);
     }
+
+    @PatchMapping("/agences/update/{id}")
+    public AgenceEntity update(@PathVariable(name = "id") Long id, @RequestBody AgenceEntity partialAgence) {
+
+        return agenceService.updateAgence(id, partialAgence);
+    }
 }
